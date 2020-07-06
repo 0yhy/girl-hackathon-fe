@@ -1,0 +1,17 @@
+.index {
+  @include flex-row;
+  justify-content: space-around;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 80px;
+  border-top: 1px $line-grey solid;
+}
+.item {
+  @include flex-col;
+  color: $grey;
+  img {
+    width: 30px;
+    height: 30px;
+  }
+}

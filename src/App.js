@@ -1,24 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, createContext } from "react";
+import "./App.css";
+import { INDEX } from "./constants/pages";
+import TabBar from "./components/tabbar/tabbar";
+import Index from "./pages/index";
+
+export const AppContext = createContext();
 
 function App() {
+  const [curPage, setCurPage] = useState(INDEX);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="main">{curPage === INDEX && <Index />}</div>
+      <AppContext.Provider value={{ curPage, setCurPage }}>
+        <TabBar />
+      </AppContext.Provider>
     </div>
   );
 }
