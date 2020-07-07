@@ -1,8 +1,5 @@
 .index {
-  @include flex-col;
-  height: 100%;
-  padding: 10px 20px;
-  box-sizing: border-box;
+  @include index-css;
 }
 .title {
   width: 100%;
@@ -20,6 +17,10 @@
   width: 7vmin;
   height: 7vmin;
   margin: 5px 0;
+}
+.curIcon {
+  border: 2px solid $theme;
+  box-sizing: border-box;
 }
 
 .main {

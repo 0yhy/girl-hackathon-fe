@@ -47,6 +47,7 @@ export default function Calendar() {
                   <Link
                     to={`/task/${day.getTime()}`}
                     className={`${day.getMonth() === new Date().getMonth() ? css['curMonth'] : ''} ${day.getDate() === new Date().getDate() && day.getMonth() === new Date().getMonth() ? css['curDate'] : ''}`}
+                    style={{ textDecoration: 'none' }}
                   >
                     {day.getDate()}
                   </Link>

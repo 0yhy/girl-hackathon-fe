@@ -1,12 +1,14 @@
 .index {
-  height: 100%;
+  @include index-css;
 }
 .title {
   @include flex-row;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 10px;
 }
 .title-date {
-  font-size: 250%;
+  font-size: $big-font;
   font-weight: lighter;
 }
 .title-add {
@@ -14,4 +16,32 @@
   color: white;
   padding: 8px;
   border-radius: 8px;
+}
+
+.tasks {
+  @include flex-col;
+  width: 100%;
+  height: 28%;
+  padding: 10px;
+  box-sizing: border-box;
+  overflow: scroll;
+  box-shadow: 5px 2px 15px $grey;
+}
+.tasks-item {
+  @include flex-row;
+  margin: 10px 0;
+  width: 100%;
+  img {
+    height: 30px;
+    width: 30px;
+    margin-right: 20px;
+  }
+}
+.tasks-item-text-title {
+  font-size: $small-font;
+  font-weight: 400;
+}
+.tasks-item-text-note {
+  color: $grey;
+  font-weight: 100;
 }

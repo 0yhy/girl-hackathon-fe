@@ -1,10 +1,10 @@
 import React, { useState, createContext } from 'react';
+import { withRouter } from 'react-router-dom';
 import css from './index.module.scss';
 
 import TabBar from '../../components/tabbar/tabbar';
-import { CALENDAR } from '../../constants/pages';
 import Calendar from '../../components/calendar/calendar';
-import { withRouter } from 'react-router-dom';
+import { CALENDAR } from '../../constants/pages';
 
 export const IndexContext = createContext();
 
