@@ -1,9 +1,8 @@
 .App {
-  text-align: center;
   width: 100%;
-}
-.main {
-  height: calc(100vh - 80px);
+  height: 100%;
+  background-image: url("./assets/bk.jpg");
+  background-size: cover;
 }
 
 @media (prefers-reduced-motion: no-preference) {

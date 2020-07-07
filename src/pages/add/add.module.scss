@@ -1,0 +1,86 @@
+.index {
+  @include flex-col;
+  height: 100%;
+  padding: 10px 20px;
+  box-sizing: border-box;
+}
+.title {
+  width: 100%;
+  font-size: $big-font;
+  font-weight: lighter;
+  margin-bottom: 10px;
+}
+.icons {
+  width: 100%;
+  max-height: 30%;
+  display: grid;
+  grid-template-columns: repeat(10, 10%);
+}
+.icons-icon {
+  width: 7vmin;
+  height: 7vmin;
+  margin: 5px 0;
+}
+
+.main {
+  width: 100%;
+  input {
+    height: 35px;
+    width: 80%;
+    padding: 5px;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 15px;
+    background-color: $line-grey;
+    outline: none;
+  }
+}
+.subtitle {
+  font-size: $medium-font;
+  margin: 5px 0;
+}
+// 任务名称
+.name-note {
+  div {
+    margin: 10px 0;
+  }
+  textarea {
+    resize: none;
+    width: 80%;
+    height: 80px;
+    border: none;
+    border-radius: 15px;
+    background-color: $line-grey;
+    outline: none;
+  }
+}
+// 起始时间/结束时间
+.time {
+  @include flex-row;
+  justify-content: space-evenly;
+  width: 100%;
+}
+.time-item {
+  width: 50%;
+}
+
+.buttons {
+  @include flex-row;
+  justify-content: space-around;
+}
+.buttons-item {
+  @include flex-row;
+  justify-content: center;
+  width: 64px;
+  height: 32px;
+  margin-top: 40px;
+  box-sizing: border-box;
+}
+.buttons-confirm {
+  background-color: $theme;
+  color: white;
+}
+.buttons-cancel {
+  background-color: white;
+  border: 1px solid $grey;
+}

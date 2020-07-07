@@ -1,2 +1,2 @@
-export const INDEX = "index";
+export const CALENDAR = "calendar";
 export const PROFILE = "profile";

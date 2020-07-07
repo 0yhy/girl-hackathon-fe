@@ -1,19 +1,19 @@
-import React, { useState, createContext } from "react";
+import React from "react";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import "./App.css";
-import { INDEX } from "./constants/pages";
-import TabBar from "./components/tabbar/tabbar";
-import Index from "./pages/index";
-
-export const AppContext = createContext();
+import Index from "./pages/index/index";
+import Task from "./pages/task/task";
+import Add from "./pages/add/add";
 
 function App() {
-  const [curPage, setCurPage] = useState(INDEX);
   return (
     <div className="App">
-      <div className="main">{curPage === INDEX && <Index />}</div>
-      <AppContext.Provider value={{ curPage, setCurPage }}>
-        <TabBar />
-      </AppContext.Provider>
+      <Router>
+        <Route path="/index" component={Index} />
+        {/* <Route path="/" render={() => <Redirect to="index" />} /> */}
+        <Route path="/task/:date" component={Task} />
+        <Route path="/add" component={Add} />
+      </Router>
     </div>
   );
 }

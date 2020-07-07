@@ -1,0 +1,17 @@
+.index {
+  height: 100%;
+}
+.title {
+  @include flex-row;
+  justify-content: space-evenly;
+}
+.title-date {
+  font-size: 250%;
+  font-weight: lighter;
+}
+.title-add {
+  background-color: $theme;
+  color: white;
+  padding: 8px;
+  border-radius: 8px;
+}
