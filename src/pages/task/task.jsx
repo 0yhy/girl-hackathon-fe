@@ -8,6 +8,9 @@ import transferDate from '../../utils/transferDate';
 import getTasksByDate from '../../utils/getTasksByDate';
 import calcTimeDifference from '../../utils/calcTimeDifference';
 import { COLORS } from '../../constants/colors';
+import Back from '../../components/back/back';
+
+import doneIcon from '../../assets/done.svg';
 
 function Task(props) {
   // 当前页面的日期
@@ -46,6 +49,7 @@ function Task(props) {
   }
   return (
     <div className={css['index']}>
+      <Back onBack={() => props.history.go(-1)} />
       {/* 标题栏 */}
       <div className={css['title']}>
         <div className={css['title-date']}>
@@ -56,8 +60,8 @@ function Task(props) {
             pathname: `/add`,
             state: {
               date: transferDate(chosenDate),
-              start: `${new Date().getHours()}:${new Date().getMinutes()}`,
-              end: `${new Date().getHours()}:${new Date().getMinutes()}`,
+              start: `${`${new Date().getHours() < 10 ? '0' : ''}${new Date().getHours()}`}:${`${new Date().getMinutes() < 10 ? '0' : ''}${new Date().getMinutes()}`}`,
+              end: `${`${new Date().getHours() < 10 ? '0' : ''}${new Date().getHours()}`}:${`${new Date().getMinutes() < 10 ? '0' : ''}${new Date().getMinutes()}`}`,
             }
           }}
           style={{ textDecoration: 'none' }}
@@ -69,8 +73,8 @@ function Task(props) {
       <div className={css['tasks']}>
         {dailyTasks.map(task => (
           <Link
-            key={task.name}
-            to={`/edit/${JSON.stringify(task)}`}
+            key={task.id}
+            to={{ pathname: `/detail`, state: task.id }}
             className={css['tasks-item']}
             style={{ textDecoration: 'none' }}
           >
@@ -79,26 +83,29 @@ function Task(props) {
               <div className={css['tasks-item-text-title']}>{task.name} {task.start}~{task.end}</div>
               <div className={css['tasks-item-text-note']}>{task.note}</div>
             </div>
+            <img alt="done" hidden={!task.done} src={doneIcon} />
           </Link>
         ))}
       </div>
       {/* 一周任务 */}
       <div className={css['weeks']}>
-        {weeklyTasks.map((dailyTasks, index) => (
-          <div key={dailyTasks.date} className={css['weeks-week']}>
+        {weeklyTasks.map((daily, index) => (
+          <div key={daily.date} className={css['weeks-week']}>
             <div>{WEEK[index].en}</div>
-            {dailyTasks.tasks.map(task => (
-              <div
+            {daily.tasks.map(task => (
+              <Link
                 key={task.id}
                 className={css['weeks-week-task']}
                 style={{
                   minHeight: Math.floor(calcTimeDifference(task.start, task.end) / 10) * 10,
-                  backgroundColor: COLORS[Math.floor((Math.random() * (COLORS.length)))]
+                  backgroundColor: task.done ? '#dadada' : COLORS[Math.floor((Math.random() * (COLORS.length)))],
+                  textDecoration: 'none'
                 }}
+                to={{ pathname: '/detail', state: task.id }}
               >
                 <div>{task.name}</div>
                 <div>{task.start}{task.end === task.start ? '' : `-${task.end}`}</div>
-              </div>
+              </Link>
             ))}
           </div>
         ))}

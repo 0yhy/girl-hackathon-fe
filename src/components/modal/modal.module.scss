@@ -1,0 +1,49 @@
+.index {
+  @include flex-col;
+  width: 100%;
+}
+.mask {
+  background-color: rgba($color: #000000, $alpha: 0.4);
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+.wrapper {
+  @include flex-col;
+  justify-content: space-between;
+  position: absolute;
+  top: 33%;
+  background-color: white;
+  width: 70%;
+  border-radius: 10px;
+  height: 150px;
+}
+.title {
+  @include flex-row;
+  align-items: flex-end;
+  height: 30%;
+  font-weight: bold;
+  font-size: $small-font;
+}
+.content {
+  color: $grey;
+}
+.buttons {
+  @include flex-row;
+  justify-content: space-between;
+  width: 100%;
+  height: 35%;
+  border-top: 1px solid $line-grey;
+  div {
+    @include flex-col;
+    justify-content: center;
+    width: 50%;
+    height: 100%;
+  }
+}
+.buttons-cancel {
+  border-right: 1px solid $line-grey;
+}
+.buttons-confirm {
+  color: $theme;
+}

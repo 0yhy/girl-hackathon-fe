@@ -3,9 +3,10 @@ import { withRouter } from 'react-router-dom';
 import css from './edit.module.scss';
 
 import ICONS from '../../constants/icons';
+import getTaskById from '../../utils/getTaskById';
 
 function Edit(props) {
-  const prevTask = JSON.parse(props.match.params.content)
+  const prevTask = props.location.state;
   const [task, setTask] = useState(prevTask);
   const onConfirm = () => {
     if (!task.name) {
@@ -20,17 +21,13 @@ function Edit(props) {
     else if (!task.end) {
       props.showToast('结束时间不能为空噢！')
     }
-    else if (task.end <= task.start) {
+    else if (task.end < task.start) {
       props.showToast('结束时间不能早于起始时间噢！')
     }
     else {
       const curTasks = JSON.parse(localStorage.getItem('tasks'));
       let newTasks = [...curTasks];
-      curTasks.forEach((item, index) => {
-        if (JSON.stringify(item) === JSON.stringify(prevTask)) {
-          newTasks.splice(index, 1, task);
-        }
-      });
+      newTasks.splice(getTaskById(prevTask.id).index, 1, task);
       localStorage.setItem('tasks', JSON.stringify(newTasks));
       props.showToast('修改成功');
       setTimeout(() => {

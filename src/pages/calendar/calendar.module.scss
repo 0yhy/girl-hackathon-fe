@@ -1,7 +1,5 @@
 .index {
-  @include flex-col;
-  width: 100%;
-  height: 100%;
+  @include index-css;
 }
 .calendar {
   @include flex-col;
@@ -44,4 +42,35 @@
 .curDate {
   color: $theme;
   text-decoration: none;
+}
+
+.next {
+  @include flex-col;
+  width: 100%;
+}
+.next-title {
+  width: 100%;
+  font-size: $big-font;
+  font-weight: 100;
+  margin: 30px 0;
+}
+.next-content {
+  @include flex-row;
+  width: 90%;
+  img {
+    width: 50px;
+    height: 50px;
+    margin-right: 20px;
+  }
+}
+.next-content-text {
+  @include flex-col;
+  align-items: flex-start;
+}
+.next-content-text-title {
+  font-size: $medium-font;
+  font-weight: 500;
+}
+.next-content-text-note {
+  color: $grey;
 }

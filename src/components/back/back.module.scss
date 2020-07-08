@@ -1,0 +1,11 @@
+.index {
+  @include flex-row;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  font-weight: bold;
+  img {
+    width: 30px;
+    height: 30px;
+  }
+}

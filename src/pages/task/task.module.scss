@@ -37,7 +37,11 @@
     margin-right: 20px;
   }
 }
+.tasks-item-text {
+  width: 80%;
+}
 .tasks-item-text-title {
+  color: black;
   font-size: $small-font;
   font-weight: 400;
 }
@@ -59,6 +63,7 @@
   width: 13%;
 }
 .weeks-week-task {
+  position: relative;
   width: 100%;
   margin: 5px 0;
   padding: 5px;
@@ -68,5 +73,4 @@
   color: white;
   font-size: $xs-font;
   font-weight: bold;
-  // word-break: break-all;
 }
