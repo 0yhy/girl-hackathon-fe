@@ -4,42 +4,102 @@ import css from './task.module.scss';
 
 import WEEK from '../../constants/week';
 import ICONS from '../../constants/icons';
+import transferDate from '../../utils/transferDate';
+import getTasksByDate from '../../utils/getTasksByDate';
+import calcTimeDifference from '../../utils/calcTimeDifference';
+import { COLORS } from '../../constants/colors';
 
 function Task(props) {
-  const date = new Date(Number(props.match.params.date));
-  useEffect(() => {
-    const localTasks = JSON.parse(localStorage.getItem('tasks'));
-    if (localTasks) {
-      console.log(localTasks);
-      setTasks(localTasks);
-    }
-  }, [])
-  const [tasks, setTasks] = useState([
+  // 当前页面的日期
+  const chosenDate = new Date(Number(props.match.params.date));
+  // 当天的所有任务
+  const [dailyTasks, setDailyTasks] = useState([
     { name: '写项目', note: '备注啊啊啊', icon: 3, start: '20:30', end: '21:30' },
     { name: '写项目1', note: '备注啊啊啊', icon: 2, start: '20:30', end: '21:30' },
     { name: '写项目2', note: '备注啊啊啊', icon: 5, start: '20:30', end: '21:30' },
     { name: '写项目3', note: '备注啊啊啊', icon: 8, start: '20:30', end: '21:30' }
-  ])
+  ]);
+  // 一周任务
+  const [weeklyTasks, setWeeklyTasks] = useState([]);
+  useEffect(() => {
+    // 获取当天任务
+    setDailyTasks(getIntradayTasks());
+    // 获取一周任务
+    setWeeklyTasks(getWeeklyTasks());
+  }, [])
+  const getIntradayTasks = () => {
+    return getTasksByDate(transferDate(chosenDate));
+  }
+  const getWeeklyTasks = () => {
+    const res = [];
+    const curDay = chosenDate.getDay();
+    const curDate = chosenDate.getDate();
+    for (let i = curDate - (curDay - 1); i <= curDate + (7 - curDay); ++i) {
+      const date = new Date(chosenDate.setDate(i));
+      res.push({
+        date: i,
+        tasks: getTasksByDate(transferDate(date))
+      })
+    };
+    console.log(res);
+    return res;
+  }
   return (
     <div className={css['index']}>
       {/* 标题栏 */}
       <div className={css['title']}>
         <div className={css['title-date']}>
-          {`${date.getMonth() + 1}月${date.getDate()}日 ${WEEK[date.getDay() - 1].zh}`}
+          {`${chosenDate.getMonth() + 1}月${chosenDate.getDate()}日 ${WEEK[chosenDate.getDay() - 1].zh}`}
         </div>
-        <Link to='/add' style={{ textDecoration: 'none' }}>
+        <Link
+          to={{
+            pathname: `/add`,
+            state: {
+              date: transferDate(chosenDate),
+              start: `${new Date().getHours()}:${new Date().getMinutes()}`,
+              end: `${new Date().getHours()}:${new Date().getMinutes()}`,
+            }
+          }}
+          style={{ textDecoration: 'none' }}
+        >
           <div className={css['title-add']}>添加新任务</div>
         </Link>
       </div>
       {/* 当天任务 */}
       <div className={css['tasks']}>
-        {tasks.map(task => (
-          <div key={task.name} className={css['tasks-item']}>
+        {dailyTasks.map(task => (
+          <Link
+            key={task.name}
+            to={`/edit/${JSON.stringify(task)}`}
+            className={css['tasks-item']}
+            style={{ textDecoration: 'none' }}
+          >
             <img alt="" src={ICONS[task.icon]} />
             <div className={css['tasks-item-text']}>
               <div className={css['tasks-item-text-title']}>{task.name} {task.start}~{task.end}</div>
               <div className={css['tasks-item-text-note']}>{task.note}</div>
             </div>
+          </Link>
+        ))}
+      </div>
+      {/* 一周任务 */}
+      <div className={css['weeks']}>
+        {weeklyTasks.map((dailyTasks, index) => (
+          <div key={dailyTasks.date} className={css['weeks-week']}>
+            <div>{WEEK[index].en}</div>
+            {dailyTasks.tasks.map(task => (
+              <div
+                key={task.id}
+                className={css['weeks-week-task']}
+                style={{
+                  minHeight: Math.floor(calcTimeDifference(task.start, task.end) / 10) * 10,
+                  backgroundColor: COLORS[Math.floor((Math.random() * (COLORS.length)))]
+                }}
+              >
+                <div>{task.name}</div>
+                <div>{task.start}{task.end === task.start ? '' : `-${task.end}`}</div>
+              </div>
+            ))}
           </div>
         ))}
       </div>

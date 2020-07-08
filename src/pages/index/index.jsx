@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import css from './index.module.scss';
 
 import TabBar from '../../components/tabbar/tabbar';
-import Calendar from '../../components/calendar/calendar';
+import Calendar from '../../pages/calendar/calendar';
 import { CALENDAR } from '../../constants/pages';
 
 export const IndexContext = createContext();

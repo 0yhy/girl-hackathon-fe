@@ -5,7 +5,13 @@ import css from './add.module.scss';
 import ICONS from '../../constants/icons';
 
 function Add(props) {
-  const [task, setTask] = useState({ id: localStorage.getItem('taskId') ? Number(localStorage.getItem('taskId') + 1) : 1, icon: 0, date: props.match.params.date });
+  const [task, setTask] = useState({
+    id: localStorage.getItem('taskId') ? Number(localStorage.getItem('taskId')) + 1 : 1,
+    icon: 0,
+    date: props.location.state.date,
+    start: props.location.state.start,
+    end: props.location.state.end
+  });
   const onConfirm = () => {
     if (!task.name) {
       props.showToast('任务名称不能为空噢！')
@@ -19,7 +25,7 @@ function Add(props) {
     else if (!task.end) {
       props.showToast('结束时间不能为空噢！')
     }
-    else if (task.end <= task.start) {
+    else if (task.end < task.start) {
       props.showToast('结束时间不能早于起始时间噢！')
     }
     else {
@@ -30,6 +36,14 @@ function Add(props) {
       setTimeout(() => {
         props.history.go(-1);
       }, 1500);
+      // 任务id+1
+      const taskId = localStorage.getItem('taskId');
+      if (taskId) {
+        localStorage.setItem('taskId', Number(taskId) + 1);
+      }
+      else {
+        localStorage.setItem('taskId', 1);
+      }
     }
   }
   return (
@@ -86,6 +100,7 @@ function Add(props) {
             <div className={`${css['subtitle']}`}> 起始时间</div>
             <input
               type='time'
+              defaultValue={task.start}
               onChange={(e) => setTask({
                 ...task, start: e.target.value
               })}
@@ -95,6 +110,7 @@ function Add(props) {
             <div className={`${css['subtitle']}`}>结束时间</div>
             <input
               type='time'
+              defaultValue={task.end}
               onChange={(e) => setTask({
                 ...task, end: e.target.value
               })}

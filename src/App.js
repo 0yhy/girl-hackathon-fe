@@ -4,6 +4,7 @@ import "./App.css";
 import Index from "./pages/index/index";
 import Task from "./pages/task/task";
 import Add from "./pages/add/add";
+import Edit from "./pages/edit/edit";
 import Toast from "./components/toast/toast";
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         {/* <Route path="/" render={() => <Redirect to="index" />} /> */}
         <Route path="/task/:date" component={Task} />
         <Route path="/add" render={() => <Add showToast={showToast} />} />
+        <Route path="/edit/:content" render={() => <Edit showToast={showToast} />} />
       </Router>
     </div>
   );

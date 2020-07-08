@@ -45,3 +45,28 @@
   color: $grey;
   font-weight: 100;
 }
+
+.weeks {
+  @include flex-row;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  width: 100%;
+  height: 50%;
+  margin-top: 20px;
+}
+.weeks-week {
+  @include flex-col;
+  width: 13%;
+}
+.weeks-week-task {
+  width: 100%;
+  margin: 5px 0;
+  padding: 5px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  background-color: pink;
+  color: white;
+  font-size: $xs-font;
+  font-weight: bold;
+  // word-break: break-all;
+}
