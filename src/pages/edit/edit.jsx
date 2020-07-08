@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
-import css from './add.module.scss';
+import css from './edit.module.scss';
 
 import ICONS from '../../constants/icons';
 
-function Add(props) {
-  const [task, setTask] = useState({ id: localStorage.getItem('taskId') ? Number(localStorage.getItem('taskId') + 1) : 1, icon: 0, date: props.match.params.date });
+function Edit(props) {
+  const prevTask = JSON.parse(props.match.params.content)
+  const [task, setTask] = useState(prevTask);
   const onConfirm = () => {
     if (!task.name) {
       props.showToast('任务名称不能为空噢！')
@@ -23,10 +24,15 @@ function Add(props) {
       props.showToast('结束时间不能早于起始时间噢！')
     }
     else {
-      const curTasks = localStorage.getItem('tasks');
-      const newTasks = curTasks ? JSON.parse(curTasks).concat([task]) : [task];
+      const curTasks = JSON.parse(localStorage.getItem('tasks'));
+      let newTasks = [...curTasks];
+      curTasks.forEach((item, index) => {
+        if (JSON.stringify(item) === JSON.stringify(prevTask)) {
+          newTasks.splice(index, 1, task);
+        }
+      });
       localStorage.setItem('tasks', JSON.stringify(newTasks));
-      props.showToast('添加成功');
+      props.showToast('修改成功');
       setTimeout(() => {
         props.history.go(-1);
       }, 1500);
@@ -35,7 +41,7 @@ function Add(props) {
   return (
     <div className={css['index']}>
       <div className={css['title']}>
-        新增任务
+        修改任务
       </div>
       <div className={css['icons']}>
         {ICONS.map((icon, index) => (
@@ -55,6 +61,7 @@ function Add(props) {
           </div>
           <input
             className={`${css['name-input']}`}
+            defaultValue={task.name}
             type='text'
             onChange={(e) => setTask({
               ...task, name: e.target.value
@@ -63,6 +70,7 @@ function Add(props) {
           <div className={`${css['name-note']}`}>
             <div>备注</div>
             <textarea
+              defaultValue={task.note}
               onChange={(e) => setTask({
                 ...task, note: e.target.value
               })}
@@ -86,6 +94,7 @@ function Add(props) {
             <div className={`${css['subtitle']}`}> 起始时间</div>
             <input
               type='time'
+              defaultValue={task.start}
               onChange={(e) => setTask({
                 ...task, start: e.target.value
               })}
@@ -95,6 +104,7 @@ function Add(props) {
             <div className={`${css['subtitle']}`}>结束时间</div>
             <input
               type='time'
+              defaultValue={task.end}
               onChange={(e) => setTask({
                 ...task, end: e.target.value
               })}
@@ -119,4 +129,4 @@ function Add(props) {
     </div>
   )
 }
-export default withRouter(Add);
+export default withRouter(Edit);
