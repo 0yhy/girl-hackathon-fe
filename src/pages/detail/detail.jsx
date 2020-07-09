@@ -8,14 +8,13 @@ import { GREY } from '../../constants/colors';
 import getTaskById from '../../utils/getTaskById';
 import Back from '../../components/back/back';
 
-const bkIndex = Math.floor(Math.random() * (BKS.length - 1));
-
 function Detail(props) {
   const id = props.location.state;
   const task = getTaskById(id).task;
   const [modalStyle, setModalStyle] = useState({ display: 'none' });
   const [modalText, setModalText] = useState('');
   const [modalContent, setModalContent] = useState('');
+  const [bkIndex] = useState(Math.floor(Math.random() * (BKS.length - 1)));
   /**
    * 点击删除该任务的确认
    */

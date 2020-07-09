@@ -23,7 +23,7 @@ function App() {
       <Toast text={toastText} style={toastStyle} />
       <Router>
         <Route path="/index" component={Index} />
-        {/* <Route path="/" render={() => <Redirect to="index" />} /> */}
+        <Route path="/" render={() => <Redirect to="index" />} />
         <Route path="/task/:date" component={Task} />
         <Route path="/add" render={() => <Add showToast={showToast} />} />
         <Route path="/edit" render={() => <Edit showToast={showToast} />} />
